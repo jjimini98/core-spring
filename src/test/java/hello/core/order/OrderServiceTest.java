@@ -1,20 +1,33 @@
 package hello.core.order;
 
+import hello.core.AppConfig;
 import hello.core.discount.DiscountPolicy;
-import hello.core.discount.FixDiscountPolicy;
 import hello.core.member.Grade;
 import hello.core.member.Member;
 import hello.core.member.MemberService;
 import hello.core.member.MemberServiceImpl;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class OrderServiceTest {
 
-    MemberService memberService = new MemberServiceImpl();
-//    DiscountPolicy discountPolicy = new FixDiscountPolicy();
-    OrderService orderService = new OrderServiceImpl();
 
+
+
+//    MemberService memberService = new MemberServiceImpl(memberRepository);
+//    DiscountPolicy discountPolicy = new FixDiscountPolicy();
+//    OrderService orderService = new OrderServiceImpl(memberRepository, discountPolicy);
+
+    MemberService memberService;
+    OrderService orderService;
+
+    @BeforeEach //각테스트 실행 전에 먼저 실행함
+    public void beforeEach() {
+        AppConfig appConfig = new AppConfig();
+        memberService = appConfig.memberService();
+        orderService = appConfig.orderService();
+    }
     @Test
     void createOrder() {
         Long memberId = 1L;
